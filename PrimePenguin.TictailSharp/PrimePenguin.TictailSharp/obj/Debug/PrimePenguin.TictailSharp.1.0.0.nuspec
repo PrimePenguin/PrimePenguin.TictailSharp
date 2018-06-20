@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>PrimePenguin.TictailSharp</id>
+    <version>1.0.0</version>
+    <authors>Sourav Thakur</authors>
+    <owners>Sourav Thakur</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>TictailSharp is a C# and .NET library that helps developers easily authenticate with and manage Tictail stores.</description>
+    <copyright>PrimePenguin</copyright>
+    <tags>Tictail,ecommerce</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Extensions.Primitives" version="1.1.0" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="8.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Security.Permissions" version="4.5.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\bin\Debug\netstandard2.0\PrimePenguin.TictailSharp.dll" target="lib\netstandard2.0\PrimePenguin.TictailSharp.dll" />
+  </files>
+</package>
