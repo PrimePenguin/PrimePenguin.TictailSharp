@@ -9,6 +9,10 @@
     <Authors>PrimePenguin</Authors>
     <Copyright>PrimePenguin</Copyright>
     <PackageTags>Tictail,ecommerce</PackageTags>
+    <PackageLicenseUrl>https://github.com/PrimePenguin/PrimePenguin.TictailSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/PrimePenguin/PrimePenguin.TictailSharp</PackageProjectUrl>
+    <PackageIconUrl>https://avatars0.githubusercontent.com/u/40055152?s=200&amp;v=4</PackageIconUrl>
+    <RepositoryUrl>https://github.com/PrimePenguin/PrimePenguin.TictailSharp</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
