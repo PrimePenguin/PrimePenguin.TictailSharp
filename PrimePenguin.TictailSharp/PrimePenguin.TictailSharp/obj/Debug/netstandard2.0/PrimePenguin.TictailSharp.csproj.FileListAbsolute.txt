@@ -1,9 +1,0 @@
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\bin\Debug\netstandard2.0\PrimePenguin.TictailSharp.deps.json
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\bin\Debug\netstandard2.0\PrimePenguin.TictailSharp.dll
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\obj\Debug\netstandard2.0\PrimePenguin.TictailSharp.csproj.CoreCompileInputs.cache
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\obj\Debug\netstandard2.0\PrimePenguin.TictailSharp.AssemblyInfoInputs.cache
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\obj\Debug\netstandard2.0\PrimePenguin.TictailSharp.AssemblyInfo.cs
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\bin\Debug\netstandard2.0\PrimePenguin.TictailSharp.pdb
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\obj\Debug\netstandard2.0\PrimePenguin.TictailSharp.dll
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\obj\Debug\netstandard2.0\PrimePenguin.TictailSharp.pdb
-D:\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\PrimePenguin.TictailSharp\obj\Debug\netstandard2.0\PrimePenguin.TictailSharp.csprojAssemblyReference.cache
