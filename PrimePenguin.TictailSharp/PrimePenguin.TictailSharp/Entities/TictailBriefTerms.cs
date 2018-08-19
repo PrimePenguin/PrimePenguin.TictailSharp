@@ -2,19 +2,19 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class BriefTerms
+    public class TictailBriefTerms
     {
         /// <summary>
         ///     The type of terms.
         /// </summary>
         [JsonProperty("type")]
-        public bool Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         ///     The version of the terms.
         /// </summary>
         [JsonProperty("version")]
-        public bool Version { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
         ///     Dynamic parameters for the terms.

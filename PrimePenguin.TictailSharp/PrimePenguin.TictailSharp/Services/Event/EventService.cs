@@ -28,14 +28,14 @@ namespace PrimePenguin.TictailSharp.Services.Event
         /// <param name="fields">A comma-separated list of fields to return.</param>
         /// <param name="hookId">ID for hook owning the event.</param>
         /// <returns>The <see cref="Event" />.</returns>
-        public virtual async Task<Entities.Event> GetAsync(string eventId, string hookId, string appId,
+        public virtual async Task<Entities.TictailEvent> GetAsync(string eventId, string hookId, string appId,
             string fields = null)
         {
             var req = PrepareRequest($"apps/{appId}/hooks/{hookId}/events/{eventId}");
 
             if (string.IsNullOrEmpty(fields) == false) req.QueryParams.Add("fields", fields);
 
-            return await ExecuteRequestAsync<Entities.Event>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<Entities.TictailEvent>(req, HttpMethod.Get);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace PrimePenguin.TictailSharp.Services.Event
         /// <param name="appId">ID for application owning the hook.</param>
         /// <param name="hookId">ID for hook owning the event.</param>
         /// <param name="options">Options for filtering the result.</param>
-        public virtual async Task<IEnumerable<Entities.Event>> ListAsync(string hookId, string appId,
+        public virtual async Task<IEnumerable<Entities.TictailEvent>> ListAsync(string hookId, string appId,
             EventListFilter options = null)
         {
             var req = PrepareRequest($"apps/{appId}/hooks/{hookId}/events");
@@ -52,7 +52,7 @@ namespace PrimePenguin.TictailSharp.Services.Event
             //Add optional parameters to request
             if (options != null) req.QueryParams.AddRange(options.ToParameters());
 
-            return await ExecuteRequestAsync<List<Entities.Event>>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<List<Entities.TictailEvent>>(req, HttpMethod.Get);
         }
     }
 }

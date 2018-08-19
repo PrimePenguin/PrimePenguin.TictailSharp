@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Address : TictailObject
+    public class TictailAddress : TictailObject
     {
         /// <summary>
         ///     First and last name.

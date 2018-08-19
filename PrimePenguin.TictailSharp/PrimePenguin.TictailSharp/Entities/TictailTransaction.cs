@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Adjustment : TictailObject
+    public class TictailAdjustment : TictailObject
     {
         /// <summary>
         ///     The order ID this message belongs to.

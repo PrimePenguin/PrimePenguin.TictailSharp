@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Variation : TictailObject
+    public class TictailVariation : TictailObject
     {
         /// <summary>
         ///     The SKU (Stock Keeping Unit) of this product. May be null. Is not guaranteed to be unique within the store.

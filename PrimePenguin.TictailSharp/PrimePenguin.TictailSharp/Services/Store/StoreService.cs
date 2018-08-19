@@ -18,11 +18,11 @@ namespace PrimePenguin.TictailSharp.Services.Store
         /// <summary>
         ///     Get a store, specified by ID.
         /// </summary>
-        public virtual async Task<Entities.Store> GetAsync(string storeId)
+        public virtual async Task<Entities.TictailStore> GetAsync(string storeId)
         {
             var request = PrepareRequest($"stores/{storeId}");
 
-            return await ExecuteRequestAsync<Entities.Store>(request, HttpMethod.Get, new JsonContent(null));
+            return await ExecuteRequestAsync<Entities.TictailStore>(request, HttpMethod.Get, new JsonContent(null));
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace PrimePenguin.TictailSharp.Services.Store
         /// <param name="storeId"></param>
         /// <param name="store"></param>
         /// <returns></returns>
-        public virtual async Task<Entities.Store> UpdateAsync(string storeId, Entities.Store store)
+        public virtual async Task<Entities.TictailStore> UpdateAsync(string storeId, Entities.TictailStore store)
         {
             var req = PrepareRequest($"stores/{storeId}");
             var content = new JsonContent(new
@@ -39,7 +39,7 @@ namespace PrimePenguin.TictailSharp.Services.Store
                 store
             });
 
-            return await ExecuteRequestAsync<Entities.Store>(req, HttpMethod.Put, content);
+            return await ExecuteRequestAsync<Entities.TictailStore>(req, HttpMethod.Put, content);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace PrimePenguin.TictailSharp.Filters
 {
     /// <summary>
     ///     Options for filtering <see cref="OrderService.CountAsync" /> and
-    ///     <see cref="OrderService.ListAsync(string,string,OrderFilter)" /> results.
+    ///     <see cref="OrderService.ListAsync(OrderFilter)" /> results.
     /// </summary>
     public class OrderFilter : ListFilter
     {

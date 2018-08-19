@@ -20,13 +20,13 @@ namespace PrimePenguin.TictailSharp.Services.Carrier
         }
 
         /// <summary>
-        ///     Gets a list of up to 250 of the shop's customers.
+        ///     Gets a list of up to 100 of the shop's customers.
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<Entities.Carrier>> ListAsync()
+        public virtual async Task<IEnumerable<Entities.TictailCarrier>> ListAsync()
         {
             var req = PrepareRequest("carriers");
-            return await ExecuteRequestAsync<List<Entities.Carrier>>(req, HttpMethod.Get, new JsonContent(null));
+            return await ExecuteRequestAsync<List<Entities.TictailCarrier>>(req, HttpMethod.Get, new JsonContent(null));
         }
     }
 }

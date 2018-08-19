@@ -22,10 +22,10 @@ namespace PrimePenguin.TictailSharp.Services.Me
         ///     Get token information
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<Entities.Me> GetAsync()
+        public virtual async Task<Entities.TictailMe> GetAsync()
         {
             var req = PrepareRequest("me");
-            return await ExecuteRequestAsync<Entities.Me>(req, HttpMethod.Get, new JsonContent(null));
+            return await ExecuteRequestAsync<Entities.TictailMe>(req, HttpMethod.Get);
         }
     }
 }

@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Vat
+    public class TictailVat
     {
         /// <summary>
         ///     Whether or not the tax is included in the product prices.

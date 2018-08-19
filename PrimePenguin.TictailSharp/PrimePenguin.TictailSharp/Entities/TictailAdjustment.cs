@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Transaction : TictailObject
+    public class TictailTransaction : TictailObject
     {
         /// <summary>
         ///     The order ID this message belongs to.
@@ -51,7 +51,7 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     paypal - Paid using PayPal account.
         /// </summary>
         [JsonProperty("payment_method")]
-        public decimal? PaymentMethod { get; set; }
+        public string PaymentMethod { get; set; }
 
         /// <summary>
         ///     purhase - Only ever exists one on the order and it is always the first transaction, describing the funds moving

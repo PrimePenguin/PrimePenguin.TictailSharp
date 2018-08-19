@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Order : TictailObject
+    public class TictailOrder : TictailObject
     {
         /// <summary>
         ///     Unique integer for the order (always increasing for newer orders).
@@ -28,19 +28,19 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     Object with basic data about the store the order was placed in, as it were when the order was placed.
         /// </summary>
         [JsonProperty("store")]
-        public Store Store { get; set; }
+        public TictailStore Store { get; set; }
 
         /// <summary>
         ///     ID of the cart from which this order was created.
         /// </summary>
         [JsonProperty("cart_id")]
-        public Store CartId { get; set; }
+        public string CartId { get; set; }
 
         /// <summary>
         ///     ID of the user that placed this order (not necessarily a user with an account at Tictail).
         /// </summary>
         [JsonProperty("user_id")]
-        public Store UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         ///     Whether the user was signed in to a Tictail account when the order was placed.
@@ -52,7 +52,7 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     Email of the customer placing this order (as entered in checkout).
         /// </summary>
         [JsonProperty("email")]
-        public Store Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         ///     open - Order is open. The order will remain in this status as long as it has not been actively cancelled.
@@ -125,21 +125,21 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     (expandable) Object describing the address to which this order should be shipped.
         /// </summary>
         [JsonProperty("shipping_address")]
-        public Address ShippingAddress { get; set; }
+        public TictailAddress ShippingAddress { get; set; }
 
         /// <summary>
         ///     (expandable) Object describing the shipping details of this order. This object always exists, and represents the
         ///     choices made by the customer in checkout.
         /// </summary>
         [JsonProperty("shipping_line")]
-        public ShippingLine ShippingLine { get; set; }
+        public TictailShippingLine ShippingLine { get; set; }
 
         /// <summary>
         ///     (expandable) Object describing the shipment information for the order. Note that this object only exists if the
         ///     order has been shipped.
         /// </summary>
         [JsonProperty("fulfillment")]
-        public Fulfillment Fulfillment { get; set; }
+        public TictailFulfillment Fulfillment { get; set; }
 
         /// <summary>
         ///     (expandable) List of messages belonging to this order. Currently, this only ever contains one message - the message
@@ -147,7 +147,7 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     list.
         /// </summary>
         [JsonProperty("messages")]
-        public IEnumerable<Message> Messages { get; set; }
+        public IEnumerable<TictailMessage> Messages { get; set; }
 
         /// <summary>
         ///     (expandable)
@@ -156,14 +156,14 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     of items belonging to this order. Each item corresponds to a purchased product variation.
         /// </summary>
         [JsonProperty("items")]
-        public IEnumerable<Item> Items { get; set; }
+        public IEnumerable<TictailItem> Items { get; set; }
 
         /// <summary>
         ///     (expandable)  List of adjustments for this order. This list will always contain at least shipping-tax and item-tax
         ///     (even if included/set to zero).
         /// </summary>
         [JsonProperty("adjustments")]
-        public IEnumerable<Adjustment> Adjustments { get; set; }
+        public IEnumerable<TictailAdjustment> Adjustments { get; set; }
 
         /// <summary>
         ///     (expandable) List of transactions for this order. The first item is always the purchase transaction on the full
@@ -171,14 +171,14 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     grand total amount.
         /// </summary>
         [JsonProperty("transactions")]
-        public IEnumerable<Transaction> Transactions { get; set; }
+        public IEnumerable<TictailTransaction> Transactions { get; set; }
 
         /// <summary>
         ///     (expandable) List of disputes for this order. A dispute can either be created at Tictail by customers, or come from
         ///     gateways (such as PayPal disputes or Stripe credit card chargebacks).
         /// </summary>
         [JsonProperty("disputes")]
-        public IEnumerable<Dispute> Disputes { get; set; }
+        public IEnumerable<TictailDispute> Disputes { get; set; }
 
         /// <summary>
         ///     (expandable) List of internal notes for this order. These can only be read be the merchant (so if scope
@@ -186,7 +186,7 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     They are intended for reminders/remarks by the merchant, and are never shared with the customer in any way
         /// </summary>
         [JsonProperty("internal_notes")]
-        public IEnumerable<InternalNote> InternalNotes { get; set; }
+        public IEnumerable<TictailInternalNote> InternalNotes { get; set; }
 
         /// <summary>
         ///     Specifies from where this order came, on the form source:platform.

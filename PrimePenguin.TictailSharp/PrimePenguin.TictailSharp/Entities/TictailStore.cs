@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Store : TictailObject
+    public class TictailStore : TictailObject
     {
         /// <summary>
         ///     Unique but mutable subdomain (x.tictail.com) for the store.
@@ -89,31 +89,31 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     VAT settings of the store, see VAT object for details.
         /// </summary>
         [JsonProperty("vat")]
-        public Vat Vat { get; set; }
+        public TictailVat Vat { get; set; }
 
         /// <summary>
         ///     List with the logotype.
         /// </summary>
         [JsonProperty("logotype")]
-        public IEnumerable<LogoType> Logotype { get; set; }
+        public IEnumerable<TictailLogoType> Logotype { get; set; }
 
         /// <summary>
         ///     Map of wallpapers by their categories.
         /// </summary>
         [JsonProperty("wallpapers")]
-        public Wallpaper Wallpapers { get; set; }
+        public TictailWallpaper Wallpapers { get; set; }
 
         /// <summary>
         ///     List of internal feature flags for this store.
         /// </summary>
         [JsonProperty("feature_flags")]
-        public IEnumerable FeatureFlags { get; set; }
+        public string[] FeatureFlags { get; set; }
 
         /// <summary>
         ///     A summary of the store’s terms.
         /// </summary>
         [JsonProperty("brief_terms")]
-        public BriefTerms BriefTerms { get; set; }
+        public TictailBriefTerms BriefTerms { get; set; }
 
         /// <summary>
         ///     The UTC date and time in ISO 8601 format format when this product was created.

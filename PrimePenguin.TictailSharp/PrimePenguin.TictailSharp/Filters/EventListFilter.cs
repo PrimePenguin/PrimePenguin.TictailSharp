@@ -9,7 +9,7 @@ namespace PrimePenguin.TictailSharp.Filters
     public class EventListFilter : Parameterizable
     {
         /// <summary>
-        ///     Limit the amount of results. Default is 50, max is 250.
+        ///     Limit the amount of results. Default is 50, max is 100.
         /// </summary>
         [JsonProperty("limit")]
         public int? Limit { get; set; }

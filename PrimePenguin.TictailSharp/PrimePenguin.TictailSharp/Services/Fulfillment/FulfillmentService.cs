@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using PrimePenguin.TictailSharp.Entities;
 using PrimePenguin.TictailSharp.Extensions;
 using PrimePenguin.TictailSharp.Infrastructure;
 
@@ -20,27 +21,27 @@ namespace PrimePenguin.TictailSharp.Services.Fulfillment
         }
 
         /// <summary>
-        ///     Retrieves the <see cref="Entities.Fulfillment" /> with the given id.
+        ///     Retrieves the <see cref="TictailFulfillment" /> with the given id.
         /// </summary>
         /// <param name="orderId">The order id to which the fulfillments belong.</param>
         /// <param name="fields">A comma-separated list of fields to return.</param>
-        /// <returns>The <see cref="Entities.Fulfillment" />.</returns>
-        public virtual async Task<Entities.Fulfillment> GetAsync(long orderId, string fields = null)
+        /// <returns>The <see cref="TictailFulfillment" />.</returns>
+        public virtual async Task<Entities.TictailFulfillment> GetAsync(long orderId, string fields = null)
         {
             var req = PrepareRequest($"/orders/{orderId}");
 
             if (!string.IsNullOrEmpty(fields)) req.QueryParams.Add("fields", fields);
 
-            return await ExecuteRequestAsync<Entities.Fulfillment>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<Entities.TictailFulfillment>(req, HttpMethod.Get);
         }
 
         /// <summary>
-        ///     Creates a new <see cref="Entities.Fulfillment" /> on the order.
+        ///     Creates a new <see cref="TictailFulfillment" /> on the order.
         /// </summary>
         /// <param name="orderId">The order id to which the fulfillments belong.</param>
-        /// <param name="fulfillment">A new <see cref="Entities.Fulfillment" />. Id should be set to null.</param>
-        /// <returns>The new <see cref="Entities.Fulfillment" />.</returns>
-        public virtual async Task<Entities.Fulfillment> CreateAsync(long orderId, Entities.Fulfillment fulfillment)
+        /// <param name="fulfillment">A new <see cref="TictailFulfillment" />. Id should be set to null.</param>
+        /// <returns>The new <see cref="TictailFulfillment" />.</returns>
+        public virtual async Task<Entities.TictailFulfillment> CreateAsync(string orderId, Entities.TictailFulfillment fulfillment)
         {
             var req = PrepareRequest($"orders/{orderId}/fulfill");
             var body = fulfillment.ToDictionary();
@@ -50,7 +51,7 @@ namespace PrimePenguin.TictailSharp.Services.Fulfillment
                 fulfillment = body
             });
 
-            return await ExecuteRequestAsync<Entities.Fulfillment>(req, HttpMethod.Post, content);
+            return await ExecuteRequestAsync<Entities.TictailFulfillment>(req, HttpMethod.Post, content);
         }
     }
 }

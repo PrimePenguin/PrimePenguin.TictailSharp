@@ -6,7 +6,7 @@ namespace PrimePenguin.TictailSharp.Entities
     /// <summary>
     ///     An object representing a product image.
     /// </summary>
-    public class ProductImage : TictailObject
+    public class TictailProductImage : TictailObject
     {
         /// <summary>
         ///     The width of the original image, in pixels.

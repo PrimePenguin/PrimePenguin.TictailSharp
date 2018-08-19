@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Customer : TictailObject
+    public class TictailCustomer : TictailObject
     {
         /// <summary>
         ///     Email to the customer. Note that this can be a proxy email address.

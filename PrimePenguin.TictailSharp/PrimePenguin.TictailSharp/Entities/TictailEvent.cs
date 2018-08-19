@@ -5,7 +5,7 @@ namespace PrimePenguin.TictailSharp.Entities
     /// <summary>
     ///     An object representing a Tictail event.
     /// </summary>
-    public class Event
+    public class TictailEvent
     {
         /// <summary>
         ///     The ID of this event. Unique for all of Tictail.

@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class Carrier : TictailObject
+    public class TictailCarrier : TictailObject
     {
         /// <summary>
         ///     TThe ID of the parent category, or null if this is a top-level category.

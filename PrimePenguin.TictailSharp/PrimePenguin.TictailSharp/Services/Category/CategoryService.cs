@@ -4,35 +4,34 @@ using System.Threading.Tasks;
 using PrimePenguin.TictailSharp.Extensions;
 using PrimePenguin.TictailSharp.Filters;
 using PrimePenguin.TictailSharp.Infrastructure;
-using PrimePenguin.TictailSharp.Services.Customer;
 
 namespace PrimePenguin.TictailSharp.Services.Category
 {
     /// <summary>
     ///     A service for Fetching Tictail customers.
     /// </summary>
-    public class MeService : TictailService
+    public class CategoryService : TictailService
     {
         /// <summary>
-        ///     Creates a new instance of <see cref="CarrierService" />.
+        ///     Creates a new instance of <see cref="CategoryService" />.
         /// </summary>
         /// <param name="myTictailUrl">The shop's *.myTictail.com URL.</param>
         /// <param name="shopAccessToken">An API access token for the shop.</param>
-        public MeService(string myTictailUrl, string shopAccessToken) : base(myTictailUrl, shopAccessToken)
+        public CategoryService(string myTictailUrl, string shopAccessToken) : base(myTictailUrl, shopAccessToken)
         {
         }
 
         /// <summary>
-        ///     Gets a list of up to 250 of the shop's customers.
+        ///     Gets a list of up to 100 of the shop's customers.
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<Entities.Customer>> ListAsync(string storeId, ListFilter filter = null)
+        public virtual async Task<IEnumerable<Entities.TictailCustomer>> ListAsync(string storeId, ListFilter filter = null)
         {
             var req = PrepareRequest($"stores/{storeId}/categories");
 
             if (filter != null) req.QueryParams.AddRange(filter.ToParameters());
 
-            return await ExecuteRequestAsync<List<Entities.Customer>>(req, HttpMethod.Get, new JsonContent(null));
+            return await ExecuteRequestAsync<List<Entities.TictailCustomer>>(req, HttpMethod.Get, new JsonContent(null));
         }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace PrimePenguin.TictailSharp.Services.Category
         /// <param name="storeId"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public virtual async Task<Entities.Category> CreateAsync(string storeId, Entities.Category category)
+        public virtual async Task<Entities.TictailCategory> CreateAsync(string storeId, Entities.TictailCategory category)
         {
             var req = PrepareRequest($"stores/{storeId}/categories");
             var content = new JsonContent(new
@@ -49,7 +48,7 @@ namespace PrimePenguin.TictailSharp.Services.Category
                 category
             });
 
-            return await ExecuteRequestAsync<Entities.Category>(req, HttpMethod.Post, content);
+            return await ExecuteRequestAsync<Entities.TictailCategory>(req, HttpMethod.Post, content);
         }
 
         /// <summary>
@@ -59,13 +58,13 @@ namespace PrimePenguin.TictailSharp.Services.Category
         /// <param name="storeId"></param>
         /// <param name="fields">A comma-separated list of fields to return.</param>
         /// <returns>The <see cref="Category" />.</returns>
-        public virtual async Task<Entities.Category> GetAsync(string categoryId, string storeId, string fields = null)
+        public virtual async Task<Entities.TictailCategory> GetAsync(string categoryId, string storeId, string fields = null)
         {
             var req = PrepareRequest($"stores/{storeId}/categories/{categoryId}");
 
             if (string.IsNullOrEmpty(fields) == false) req.QueryParams.Add("fields", fields);
 
-            return await ExecuteRequestAsync<Entities.Category>(req, HttpMethod.Get, new JsonContent(null));
+            return await ExecuteRequestAsync<Entities.TictailCategory>(req, HttpMethod.Get, new JsonContent(null));
         }
 
         /// <summary>
@@ -75,8 +74,8 @@ namespace PrimePenguin.TictailSharp.Services.Category
         /// <param name="categoryId"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public virtual async Task<Entities.Category> UpdateAsync(string storeId, string categoryId,
-            Entities.Category category)
+        public virtual async Task<Entities.TictailCategory> UpdateAsync(string storeId, string categoryId,
+            Entities.TictailCategory category)
         {
             var req = PrepareRequest($"stores/{storeId}/categories/{categoryId}");
             var body = category.Title.ToDictionary();
@@ -86,7 +85,7 @@ namespace PrimePenguin.TictailSharp.Services.Category
                 title = body
             });
 
-            return await ExecuteRequestAsync<Entities.Category>(req, HttpMethod.Put, content);
+            return await ExecuteRequestAsync<Entities.TictailCategory>(req, HttpMethod.Put, content);
         }
 
 

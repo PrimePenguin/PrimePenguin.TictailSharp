@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PrimePenguin.TictailSharp.Entities
 {
-    public class User : TictailObject
+    public class TictailUser : TictailObject
     {
         /// <summary>
         ///     Unique but mutable username.
@@ -26,12 +26,12 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     User avatar information.
         /// </summary>
         [JsonProperty("avatar")]
-        public ProductImage Avatar { get; set; }
+        public TictailProductImage Avatar { get; set; }
 
         /// <summary>
         ///     Terms of Service version accepted by the user.
         /// </summary>
         [JsonProperty("tos_version")]
-        public long? TosVersion { get; set; }
+        public string TosVersion { get; set; }
     }
 }

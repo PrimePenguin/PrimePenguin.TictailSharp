@@ -11,15 +11,9 @@ namespace PrimePenguin.TictailSharp.Services.Order
         public decimal? RefundAmount { get; set; }
 
         /// <summary>
-        ///     Currency in ISO 4217 format for amount. Must match the order.currency.
-        /// </summary>
-        [JsonProperty("currency")]
-        public string Currency { get; set; }
-
-        /// <summary>
         ///     See transaction.refund_reason for possible values.
         /// </summary>
-        [JsonProperty("reason")]
+        [JsonProperty("refund_reason")]
         public string Reason { get; set; }
     }
 }

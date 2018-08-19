@@ -20,24 +20,24 @@ namespace PrimePenguin.TictailSharp.Services.Webhook
         }
 
         /// <summary>
-        ///     Gets a list of up to 250 of the shop's webhooks.
+        ///     Gets a list of up to 100 of the shop's webhooks.
         /// </summary>
         /// <param name="appId"></param>
         /// <returns>The list of webhooks matching the filter.</returns>
-        public virtual async Task<IEnumerable<Entities.Webhook>> ListAsync(string appId)
+        public virtual async Task<IEnumerable<Entities.TictailWebhook>> ListAsync(string appId)
         {
             var req = PrepareRequest($"apps/{appId}/hooks");
-            return await ExecuteRequestAsync<List<Entities.Webhook>>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<List<Entities.TictailWebhook>>(req, HttpMethod.Get);
         }
 
         /// <summary>
         ///     Retrieves the <see cref="Webhook" /> with the given id.
         /// </summary>
         /// <returns>The <see cref="Webhook" />.</returns>
-        public virtual async Task<Entities.Webhook> GetAsync(string appId, string hookId = null)
+        public virtual async Task<Entities.TictailWebhook> GetAsync(string appId, string hookId = null)
         {
             var req = PrepareRequest($"apps/{appId}/hooks/{hookId}");
-            return await ExecuteRequestAsync<Entities.Webhook>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<Entities.TictailWebhook>(req, HttpMethod.Get);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace PrimePenguin.TictailSharp.Services.Webhook
         /// <param name="appId"></param>
         /// <param name="webhook">A new <see cref="Webhook" />. Id should be set to null.</param>
         /// <returns>The new <see cref="Webhook" />.</returns>
-        public virtual async Task<Entities.Webhook> CreateAsync(string appId, Entities.Webhook webhook)
+        public virtual async Task<Entities.TictailWebhook> CreateAsync(string appId, Entities.TictailWebhook webhook)
         {
             var req = PrepareRequest($"apps/{appId}/hooks");
             var content = new JsonContent(new
@@ -54,7 +54,7 @@ namespace PrimePenguin.TictailSharp.Services.Webhook
                 webhook
             });
 
-            return await ExecuteRequestAsync<Entities.Webhook>(req, HttpMethod.Post, content);
+            return await ExecuteRequestAsync<Entities.TictailWebhook>(req, HttpMethod.Post, content);
         }
 
         /// <summary>

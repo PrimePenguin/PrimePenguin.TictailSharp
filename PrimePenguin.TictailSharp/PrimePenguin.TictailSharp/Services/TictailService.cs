@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PrimePenguin.TictailSharp.Entities;
 using PrimePenguin.TictailSharp.Infrastructure;
 using PrimePenguin.TictailSharp.Infrastructure.Policies;
 
@@ -15,7 +16,7 @@ namespace PrimePenguin.TictailSharp.Services
     {
         private static IRequestExecutionPolicy _globalExecutionPolicy = new DefaultRequestExecutionPolicy();
 
-        private static readonly JsonSerializer _serializer =
+        private static readonly JsonSerializer Serializer =
             new JsonSerializer {DateParseHandling = DateParseHandling.DateTimeOffset};
 
         private IRequestExecutionPolicy _executionPolicy;
@@ -64,8 +65,8 @@ namespace PrimePenguin.TictailSharp.Services
 
             var builder = new UriBuilder(myTictailUrl)
             {
-                Scheme = "https:"
-                //Port = 443, //SSL port
+                Scheme = "https:",
+                Port = 443, //SSL port
                 //Path = withAdminPath ? "admin" : ""
             };
 
@@ -97,7 +98,7 @@ namespace PrimePenguin.TictailSharp.Services
             {
                 Scheme = "https:",
                 Port = 443,
-                Path = $"{ShopUri}/{path}"
+                Path = $"/v1.25/{path}"
             };
 
             return new RequestUri(ub.Uri);
@@ -111,7 +112,7 @@ namespace PrimePenguin.TictailSharp.Services
         {
             var msg = new CloneableRequestMessage(uri.ToUri(), method, content);
 
-            if (!string.IsNullOrEmpty(AccessToken)) msg.Headers.Add("access_token", AccessToken);
+            if (!string.IsNullOrEmpty(AccessToken)) msg.Headers.Add("Authorization", $"Bearer {AccessToken}");
             msg.Headers.Add("Accept", "application/json");
 
             return msg;
@@ -164,7 +165,10 @@ namespace PrimePenguin.TictailSharp.Services
         ///     Use this method when the expected response is a single line or simple object that doesn't warrant its own class.
         /// </summary>
         /// <remarks>
-        ///     This method will automatically dispose the <paramref name="baseRequestMessage" /> when finished.
+        ///     This method will automatically dispose the <paramref>
+        ///         <name>baseRequestMessage</name>
+        ///     </paramref>
+        ///     when finished.
         /// </remarks>
         protected async Task<T> ExecuteRequestAsync<T>(RequestUri uri, HttpMethod method, HttpContent content = null,
             string rootElement = null) where T : new()
@@ -188,10 +192,19 @@ namespace PrimePenguin.TictailSharp.Services
                         // Delete methods should not be parsing the response JSON and should instead
                         // be using the non-generic ExecuteRequestAsync.
                         var reader = new JsonTextReader(new StringReader(rawResult));
-                        var data = _serializer.Deserialize<JObject>(reader);
-                        var result = data.ToObject<T>();
+                        if (rawResult.StartsWith("["))
+                        {
+                            var data = Serializer.Deserialize<JArray>(reader);
+                            var result = data.ToObject<T>();
 
-                        return new RequestResult<T>(response, result, rawResult);
+                            return new RequestResult<T>(response, result, rawResult);
+                        }
+                        else
+                        {
+                            var data = Serializer.Deserialize<JObject>(reader);
+                            var result = data.ToObject<T>();
+                            return new RequestResult<T>(response, result, rawResult);
+                        }
                     }
                 });
 
@@ -203,6 +216,7 @@ namespace PrimePenguin.TictailSharp.Services
         ///     Checks a response for exceptions or invalid status codes. Throws an exception when necessary.
         /// </summary>
         /// <param name="response">The response.</param>
+        /// <param name="rawResponse"></param>
         public static void CheckResponseExceptions(HttpResponseMessage response, string rawResponse)
         {
             var statusCode = (int) response.StatusCode;

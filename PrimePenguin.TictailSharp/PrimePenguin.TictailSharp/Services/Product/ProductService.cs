@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using PrimePenguin.TictailSharp.Entities;
 using PrimePenguin.TictailSharp.Extensions;
 using PrimePenguin.TictailSharp.Filters;
 using PrimePenguin.TictailSharp.Infrastructure;
@@ -22,15 +24,15 @@ namespace PrimePenguin.TictailSharp.Services.Product
         }
 
         /// <summary>
-        ///     Gets a list of up to 250 of the shop's products.
+        ///     Gets a list of up to 100 of the shop's products.
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<Entities.Product>> ListAsync(string storeId, ProductFilter options = null)
+        public virtual async Task<IEnumerable<Entities.TictailProduct>> ListAsync(string storeId, ProductFilter options = null)
         {
-            var req = PrepareRequest($"stores/{storeId}/products.json");
+            var req = PrepareRequest($"stores/{storeId}/products");
             if (options != null) req.QueryParams.AddRange(options.ToParameters());
 
-            return await ExecuteRequestAsync<List<Entities.Product>>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<List<Entities.TictailProduct>>(req, HttpMethod.Get);
         }
 
         /// <summary>
@@ -40,13 +42,13 @@ namespace PrimePenguin.TictailSharp.Services.Product
         /// <param name="storeId"></param>
         /// <param name="fields">A comma-separated list of fields to return.</param>
         /// <returns>The <see cref="Product" />.</returns>
-        public virtual async Task<Entities.Product> GetAsync(string productId, string storeId, string fields = null)
+        public virtual async Task<Entities.TictailProduct> GetAsync(string productId, string storeId, string fields = null)
         {
             var req = PrepareRequest($"stores/{storeId}/products/{productId}");
 
             if (string.IsNullOrEmpty(fields) == false) req.QueryParams.Add("fields", fields);
 
-            return await ExecuteRequestAsync<Entities.Product>(req, HttpMethod.Get);
+            return await ExecuteRequestAsync<Entities.TictailProduct>(req, HttpMethod.Get);
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace PrimePenguin.TictailSharp.Services.Product
         /// <param name="product">A new <see cref="Product" />. Id should be set to null.</param>
         /// <param name="storeId"></param>
         /// <returns>The new <see cref="Product" />.</returns>
-        public virtual async Task<Entities.Product> CreateAsync(Entities.Product product, string storeId)
+        public virtual async Task<Entities.TictailProduct> CreateAsync(Entities.TictailProduct product, string storeId)
         {
             var req = PrepareRequest($"stores/{storeId}/products");
             var body = product.ToDictionary();
@@ -65,24 +67,25 @@ namespace PrimePenguin.TictailSharp.Services.Product
                 product = body
             });
 
-            return await ExecuteRequestAsync<Entities.Product>(req, HttpMethod.Post, content);
+            return await ExecuteRequestAsync<Entities.TictailProduct>(req, HttpMethod.Post);
         }
 
         /// <summary>
         ///     Updates the given <see cref="Product" />.
         /// </summary>
-        /// <param name="productId">Id of the object being updated.</param>
         /// <param name="product">The <see cref="Product" /> to update.</param>
         /// <returns>The updated <see cref="Product" />.</returns>
-        public virtual async Task<Entities.Product> UpdateAsync(string productId, Entities.Product product)
+        public virtual async Task<Entities.TictailProductUpdate> UpdateAsync(TictailProductUpdate product)
         {
-            var req = PrepareRequest($"products/{productId}.json");
+            var method = new HttpMethod("PATCH");
+            var req = PrepareRequest($"stores/{product.StoreId}/products/{product.Id}");
+            var json = JsonConvert.SerializeObject(product);
             var content = new JsonContent(new
             {
-                product
+                json
             });
-
-            return await ExecuteRequestAsync<Entities.Product>(req, HttpMethod.Put, content, "product");
+       
+            return await ExecuteRequestAsync<Entities.TictailProductUpdate>(req, method, content);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace PrimePenguin.TictailSharp.Entities
     /// <summary>
     ///     An entity representing a Tictail product.
     /// </summary>
-    public class Product : TictailObject
+    public class TictailProduct : TictailObject
     {
         /// <summary>
         ///     The ID of the store for this product.
@@ -72,20 +72,20 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     The display price, in cents, for this product.
         /// </summary>
         [JsonProperty("price")]
-        public decimal Price { get; set; }
+        public string Price { get; set; }
 
         /// <summary>
         ///     The display original price, in cents, for this product.
         /// </summary>
         [JsonProperty("original_price")]
-        public decimal OriginalPrice { get; set; }
+        public string OriginalPrice { get; set; }
 
         /// <summary>
         ///     The display sale price, in cents, for this product. May be null. Only set to non-null values in non-authorized
         ///     requests if sale_active is true.
         /// </summary>
         [JsonProperty("sale_price")]
-        public decimal SalePrice { get; set; }
+        public string SalePrice { get; set; }
 
         /// <summary>
         ///     Display property for whether or not this product has a sale enabled. Only set to true in non-authorized requests if
@@ -133,19 +133,19 @@ namespace PrimePenguin.TictailSharp.Entities
         ///     List of variations for this product. All products have at least one variation.
         /// </summary>
         [JsonProperty("variations")]
-        public IEnumerable<Variation> Variations { get; set; }
+        public IEnumerable<TictailVariation> Variations { get; set; }
 
         /// <summary>
         ///     List of images for this product.
         /// </summary>
         [JsonProperty("images")]
-        public IEnumerable<ProductImage> Images { get; set; }
+        public IEnumerable<TictailProductImage> Images { get; set; }
 
         /// <summary>
         ///     List of categories for this product.
         /// </summary>
         [JsonProperty("categories")]
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<TictailCategory> Categories { get; set; }
 
         /// <summary>
         ///     The ID of the product category this product is categorized as. May be null. See Product Category.

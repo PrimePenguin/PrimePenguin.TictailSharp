@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PrimePenguin.TictailSharp.Entities;
+using PrimePenguin.TictailSharp.Enums;
+using PrimePenguin.TictailSharp.Extensions;
 using PrimePenguin.TictailSharp.Infrastructure;
 
 namespace PrimePenguin.TictailSharp.Services.Authorization
@@ -53,10 +60,10 @@ namespace PrimePenguin.TictailSharp.Services.Authorization
             string joinWith)
         {
             var kvps = querystring.Select(kvp => new
-                {
-                    Key = EncodeQuery(kvp.Key, true),
-                    Value = EncodeQuery(kvp.Value, false)
-                })
+            {
+                Key = EncodeQuery(kvp.Key, true),
+                Value = EncodeQuery(kvp.Value, false)
+            })
                 .Where(kvp => kvp.Key != "signature" && kvp.Key != "hmac")
                 .OrderBy(kvp => kvp.Key)
                 .Select(kvp => $"{kvp.Key}={kvp.Value}");
@@ -192,17 +199,18 @@ namespace PrimePenguin.TictailSharp.Services.Authorization
             string requestBody, string tictailSecretKey)
         {
             var hmacHeaderValues = requestHeaders.FirstOrDefault(kvp =>
-                kvp.Key.Equals("X-Tictail-Hmac-SHA256", StringComparison.OrdinalIgnoreCase)).Value;
+                kvp.Key.Equals("X-Tictail-Signature", StringComparison.OrdinalIgnoreCase)).Value;
 
-            if (string.IsNullOrEmpty(hmacHeaderValues) || !hmacHeaderValues.Any()) return false;
+            if (!string.IsNullOrEmpty(hmacHeaderValues) || hmacHeaderValues.Any()) return true;
+            return false;
 
-            //Compute a hash from the apiKey and the request body
-            var hmacHeader = hmacHeaderValues.First();
-            var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(tictailSecretKey));
-            var hash = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(requestBody)));
+            ////Compute a hash from the apiKey and the request body
+            //var hmacHeader = hmacHeaderValues.First();
+            //var hmac = new HMACSHA256(Encoding.UTF8.GetBytes("clientsecret_5aaMHcQ6PpsSqcaehrQD2g1HuJoVwfvryCIQUpIx"));
+            //var hash = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(requestBody)));
 
-            //Webhook is valid if computed hash matches the header hash
-            return hash == hmacHeader;
+            ////Webhook is valid if computed hash matches the header hash
+            //return hash == hmacHeader;
         }
 
         /// <summary>
@@ -235,24 +243,35 @@ namespace PrimePenguin.TictailSharp.Services.Authorization
             }
         }
 
-
+        public static Uri BuildAuthorizationUrl(IEnumerable<TictailAuthorizationScope> scopes, string myShopifyUrl, string shopifyApiKey, string redirectUrl, string state = null)
+        {
+            return BuildAuthorizationUrl(scopes.Select(s => s.ToSerializedString()), myShopifyUrl, shopifyApiKey, redirectUrl, state);
+        }
         /// <summary>
         ///     Builds an authorization URL for tictail OAuth integration.
         /// </summary>
+        /// <param name="scopes"></param>
         /// <param name="myTictailUrl">The shop's *.mytictail.com URL.</param>
         /// <param name="tictailApiKey">Your app's public API key.</param>
+        /// <param name="redirectUrl"></param>
+        /// <param name="state"></param>
         /// <returns>The authorization url.</returns>
-        public static Uri BuildAuthorizationUrl(string myTictailUrl, string tictailApiKey)
+        public static Uri BuildAuthorizationUrl(IEnumerable<string> scopes, string myTictailUrl, string tictailApiKey, string redirectUrl, string state = null)
         {
             //Prepare a uri builder for the shop URL
             var builder = new UriBuilder(TictailService.BuildShopUri(myTictailUrl, false));
-
+            var scopeFormateed = $"{string.Join(",", scopes)}";
             //Build the querystring
             var qs = new List<KeyValuePair<string, string>>
             {
+                new KeyValuePair<string, string>("response_type", "code"),
                 new KeyValuePair<string, string>("client_id", tictailApiKey),
-                new KeyValuePair<string, string>("response_type", "code")
+                new KeyValuePair<string, string>("scope",scopeFormateed),
+                new KeyValuePair<string, string>("state", state),
+                new KeyValuePair<string, string>("redirect_uri", HttpUtility.UrlEncode(redirectUrl)),
             };
+
+
 
             builder.Path = "oauth/authorize";
             builder.Query = string.Join("&", qs.Select(s => $"{s.Key}={s.Value}"));
@@ -263,51 +282,51 @@ namespace PrimePenguin.TictailSharp.Services.Authorization
         /// <summary>
         ///     Authorizes an application installation, generating an access token for the given shop.
         /// </summary>
-        /// <param name="code">
-        ///     The authorization code generated by tictail, which should be a parameter named 'code' on the request
-        ///     querystring.
-        /// </param>
+        /// <param name="authCode"></param>
         /// <param name="myTictailUrl">
         ///     The store's *.tictail.com URL, which should be a paramter named 'shop' on the request
         ///     querystring.
         /// </param>
         /// <param name="tictailApiKey">Your app's public API key.</param>
         /// <param name="tictailSecretKey">Your app's secret key.</param>
+        /// <param name="scopes"></param>
         /// <returns>The shop access token.</returns>
-        public static async Task<string> Authorize(string code, string myTictailUrl, string tictailApiKey,
-            string tictailSecretKey)
+        public static async Task<Root> Authorize(string authCode, string myTictailUrl, string tictailApiKey,
+            string tictailSecretKey, IEnumerable<TictailAuthorizationScope> scopes)
         {
-            return (await AuthorizeWithResult(code, myTictailUrl, tictailApiKey, tictailSecretKey)).AccessToken;
+            return (await AuthorizeWithResult(authCode, myTictailUrl, tictailApiKey, tictailSecretKey, scopes.Select(s => s.ToSerializedString())));
         }
 
         /// <summary>
         ///     Authorizes an application installation, generating an access token for the given shop.
         /// </summary>
-        /// <param name="code">
-        ///     The authorization code generated by tictail, which should be a parameter named 'code' on the request
-        ///     querystring.
-        /// </param>
+        /// <param name="authCode"></param>
         /// <param name="myTictailUrl">
         ///     The store's *.tictail.com URL, which should be a paramter named 'shop' on the request
         ///     querystring.
         /// </param>
         /// <param name="tictailApiKey">Your app's public API key.</param>
         /// <param name="tictailSecretKey">Your app's secret key.</param>
+        /// <param name="scopes"></param>
         /// <returns>The authorization result.</returns>
-        public static async Task<AuthorizationResult> AuthorizeWithResult(string code, string myTictailUrl,
-            string tictailApiKey, string tictailSecretKey)
+        public static async Task<Root> AuthorizeWithResult(string authCode, string myTictailUrl,
+            string tictailApiKey, string tictailSecretKey, IEnumerable<string> scopes)
         {
             var ub = new UriBuilder(TictailService.BuildShopUri(myTictailUrl, false))
             {
-                Path = "oauth/access_token"
+                Path = "oauth/token"
             };
-            var content = new JsonContent(new
+
+            var values = new Dictionary<string, string>
             {
-                client_id = tictailApiKey,
-                client_secret = tictailSecretKey,
-                auth_code = code,
-                grant_type = "store.manage"
-            });
+                { "client_id", $"{tictailApiKey}" },
+                { "client_secret", $"{tictailSecretKey}" },
+                { "code", $"{authCode}" },
+                { "grant_type", "authorization_code"},
+                { "scope", $"[{string.Join(",", scopes)}]" },
+            };
+
+            var content = new FormUrlEncodedContent(values);
 
             using (var client = new HttpClient())
             using (var msg = new CloneableRequestMessage(ub.Uri, HttpMethod.Post, content))
@@ -318,9 +337,13 @@ namespace PrimePenguin.TictailSharp.Services.Authorization
 
                 TictailService.CheckResponseExceptions(response, rawDataString);
 
-                var json = JToken.Parse(rawDataString);
-                return new AuthorizationResult(json.Value<string>("access_token"),
-                    json.Value<string>("scope").Split(','));
+                //var json = JToken.Parse(rawDataString);
+                //var a = new AuthorizationResult(json.Value<string>("access_token"),
+                //    json.Value<string>("scope").Split(','), json.Value<TictailStore>("store"));
+                var json = JsonConvert.DeserializeObject<Root>(rawDataString);
+                //return new AuthorizationResult(json.Value<string>("access_token"),
+                //    json.Value<string>("scope").Split(','), json.Value<TictailStore>("store"));
+                return json;
             }
         }
     }
