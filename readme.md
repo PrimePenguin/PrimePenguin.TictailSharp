@@ -1,9 +1,9 @@
 
-# [![Prime Penguin](https://img.shields.io/nuget/v/TictailSharp.svg?maxAge=3600)](https://www.primepenguin.com/)
+# [![Prime Penguin](https://avatars0.githubusercontent.com/u/40055152?s=200&v=4)](https://www.primepenguin.com/)
 # PrimePenguin.TictailSharp: A .NET library for Tictail.
 ### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.1.0)
 
-[![NuGet](https://avatars0.githubusercontent.com/u/40055152?s=200&v=4)](https://www.nuget.org/packages/PrimePenguin.TictailSharp/)
+[![NuGet](https://img.shields.io/nuget/v/TictailSharp.svg?maxAge=3600)](https://www.nuget.org/packages/PrimePenguin.TictailSharp/)
 [![Build status](https://ci.appveyor.com/api/projects/status/58l0gs6cqak3xtlf/branch/master?svg=true)]()
 [![license](https://img.shields.io/github/license/PrimePenguin/PrimePenguin.TictailSharp.svg?maxAge=3600)](https://github.com/PrimePenguin/PrimePenguin.TictailSharp/blob/master/LICENSE)
 
@@ -23,4 +23,3 @@ If you're using .NET Core, you can use the `dotnet` command from your favorite s
 
 ```
 dotnet add package PrimePenguin.TictailSharp --version 1.1.0
-```
