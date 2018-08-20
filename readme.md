@@ -1,5 +1,7 @@
 
-# [![Prime Penguin](https://avatars0.githubusercontent.com/u/40055152?s=200&v=4)](https://www.primepenguin.com/)
+<p align="center">
+  <img href="https://www.primepenguin.com/" src="https://avatars0.githubusercontent.com/u/40055152?s=200&v=4">
+</p>
 # PrimePenguin.TictailSharp: A .NET library for Tictail.
 ### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.1.0)
 
@@ -23,3 +25,4 @@ If you're using .NET Core, you can use the `dotnet` command from your favorite s
 
 ```
 dotnet add package PrimePenguin.TictailSharp --version 1.1.0
+```
