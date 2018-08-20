@@ -1,5 +1,5 @@
 <div align="center">
-  <img href="" src="https://www.primepenguin.com/">
+  <img href="https://www.primepenguin.com/" src="https://avatars0.githubusercontent.com/u/40055152?s=50&v=4">
 </div>
 
 # PrimePenguin.TictailSharp: A .NET library for Tictail.
