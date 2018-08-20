@@ -1,9 +1,9 @@
-# PrimePenguin.TictailSharp: A .NET library for Tictail.
-### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.1.0)
-
 <div align="center">
   <img href="" src="https://avatars0.githubusercontent.com/u/40055152?s=50&v=4">
 </div>
+
+# PrimePenguin.TictailSharp: A .NET library for Tictail.
+### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.1.0)
 
 [![NuGet](https://img.shields.io/nuget/v/TictailSharp.svg?maxAge=3600)](https://www.nuget.org/packages/PrimePenguin.TictailSharp/)
 [![Build status](https://ci.appveyor.com/api/projects/status/58l0gs6cqak3xtlf/branch/master?svg=true)]()
