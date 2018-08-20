@@ -10,11 +10,11 @@ PrimePenguin.TictailSharp is [available on NuGet](https://www.nuget.org/packages
 console in Visual Studio to install it:
 
 ```
-Install-Package PrimePenguin.TictailSharp -Version 0.0.1
+Install-Package PrimePenguin.TictailSharp -Version 1.1.0
 ```
 
 If you're using .NET Core, you can use the `dotnet` command from your favorite shell:
 
 ```
-dotnet add package PrimePenguin.TictailSharp --version 0.0.1
+dotnet add package PrimePenguin.TictailSharp --version 1.1.0
 ```
