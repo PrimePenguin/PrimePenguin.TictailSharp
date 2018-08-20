@@ -1,5 +1,11 @@
+
+# [![Prime Penguin](https://img.shields.io/nuget/v/TictailSharp.svg?maxAge=3600)](https://www.primepenguin.com/)
 # PrimePenguin.TictailSharp: A .NET library for Tictail.
 ### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.1.0)
+
+[![NuGet](https://avatars0.githubusercontent.com/u/40055152?s=200&v=4)](https://www.nuget.org/packages/PrimePenguin.TictailSharp/)
+[![Build status](https://ci.appveyor.com/api/projects/status/58l0gs6cqak3xtlf/branch/master?svg=true)]()
+[![license](https://img.shields.io/github/license/PrimePenguin/PrimePenguin.TictailSharp.svg?maxAge=3600)](https://github.com/PrimePenguin/PrimePenguin.TictailSharp/blob/master/LICENSE)
 
 PrimePenguin.TictailSharp is a .NET library that enables you to authenticate and make API calls to TictailSharp. 
 It's great for building custom Tictail Apps using C# and .NET. You can quickly and easily get up and running with Tictail using this library.
