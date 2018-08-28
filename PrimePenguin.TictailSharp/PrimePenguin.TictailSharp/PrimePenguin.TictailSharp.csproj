@@ -13,7 +13,9 @@
     <PackageProjectUrl>https://github.com/PrimePenguin/PrimePenguin.TictailSharp</PackageProjectUrl>
     <PackageIconUrl>https://avatars0.githubusercontent.com/u/40055152?s=200&amp;v=4</PackageIconUrl>
     <RepositoryUrl>https://github.com/PrimePenguin/PrimePenguin.TictailSharp</RepositoryUrl>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
