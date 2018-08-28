@@ -1,6 +1,9 @@
+<div align="center">
+  <img href="https://www.primepenguin.com/" src="https://avatars0.githubusercontent.com/u/40055152?s=50&v=4">
+</div>
 
 # PrimePenguin.TictailSharp: A .NET library for Tictail.
-### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.1.0)
+### Now with .NET Core support! (PrimePenguin.TictailSharp -Version 1.2.0)
 
 [![NuGet](https://img.shields.io/nuget/v/TictailSharp.svg?maxAge=3600)](https://www.nuget.org/packages/PrimePenguin.TictailSharp/)
 [![Build status](https://ci.appveyor.com/api/projects/status/58l0gs6cqak3xtlf/branch/master?svg=true)]()
@@ -11,15 +14,15 @@ It's great for building custom Tictail Apps using C# and .NET. You can quickly a
 
 # Installation
 
-PrimePenguin.TictailSharp is [available on NuGet](https://www.nuget.org/packages/PrimePenguin.TictailSharp/1.1.0). Use the package manager
+PrimePenguin.TictailSharp is [available on NuGet](https://www.nuget.org/packages/PrimePenguin.TictailSharp/1.2.0). Use the package manager
 console in Visual Studio to install it:
 
 ```
-Install-Package PrimePenguin.TictailSharp -Version 1.1.0
+Install-Package PrimePenguin.TictailSharp -Version 1.2.0
 ```
 
 If you're using .NET Core, you can use the `dotnet` command from your favorite shell:
 
 ```
-dotnet add package PrimePenguin.TictailSharp --version 1.1.0
+dotnet add package PrimePenguin.TictailSharp --version 1.2.0
 ```
