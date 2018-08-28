@@ -27,6 +27,7 @@ namespace PrimePenguin.TictailSharp.Services.Order
         /// <summary>
         ///     Gets a list of up to 100 of the shop's orders.
         /// </summary>
+        /// <param name="scopes"></param>
         /// <param name="options">Options for filtering the list.</param>
         /// <returns>The list of orders matching the filter.</returns>
         public virtual async Task<IEnumerable<Entities.TictailOrder>> ListAsync(IEnumerable<TictailOrderScope> scopes, OrderFilter options = null)
@@ -37,10 +38,12 @@ namespace PrimePenguin.TictailSharp.Services.Order
             req.QueryParams.Add("expand", string.Join(",", scopes.Select(s => s.ToSerializedString())));
             return await ExecuteRequestAsync<List<Entities.TictailOrder>>(req, HttpMethod.Get);
         }
+
         /// <summary>
         ///     Retrieves the <see cref="Order" /> with the given id.
         /// </summary>
         /// <param name="orderId">The id of the order to retrieve.</param>
+        /// <param name="scopes"></param>
         /// <param name="fields">A comma-separated list of fields to return.</param>
         /// <returns>The <see cref="Order" />.</returns>
         public virtual async Task<Entities.TictailOrder> GetAsync(string orderId, IEnumerable<TictailOrderScope> scopes, string fields = null)
@@ -75,6 +78,19 @@ namespace PrimePenguin.TictailSharp.Services.Order
             var content = new JsonContent(options ?? new OrderCancelOptions());
 
             return await ExecuteRequestAsync<Entities.TictailRefund>(req, HttpMethod.Post, content);
+        }
+        /// <summary>
+        ///     Count an order.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public virtual async Task<int> CountAsync(OrderFilter options = null)
+        {
+            var req = PrepareRequest("orders");
+            if (options != null)
+            req.QueryParams.AddRange(options.ToParameters());
+
+            return await ExecuteRequestAsync<int>(req, HttpMethod.Head);
         }
     }
 }

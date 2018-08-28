@@ -15,5 +15,8 @@ namespace PrimePenguin.TictailSharp.Services.Order
         /// </summary>
         [JsonProperty("refund_reason")]
         public string Reason { get; set; }
+        
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
     }
 }

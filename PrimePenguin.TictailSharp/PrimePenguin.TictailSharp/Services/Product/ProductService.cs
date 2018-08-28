@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PrimePenguin.TictailSharp.Entities;
@@ -75,17 +76,12 @@ namespace PrimePenguin.TictailSharp.Services.Product
         /// </summary>
         /// <param name="product">The <see cref="Product" /> to update.</param>
         /// <returns>The updated <see cref="Product" />.</returns>
-        public virtual async Task<Entities.TictailProductUpdate> UpdateAsync(TictailProductUpdate product)
+        public virtual async Task<Entities.TictailProduct> UpdateAsync(TictailProductUpdate product)
         {
             var method = new HttpMethod("PATCH");
             var req = PrepareRequest($"stores/{product.StoreId}/products/{product.Id}");
-            var json = JsonConvert.SerializeObject(product);
-            var content = new JsonContent(new
-            {
-                json
-            });
-       
-            return await ExecuteRequestAsync<Entities.TictailProductUpdate>(req, method, content);
+            var json = new StringContent(JsonConvert.SerializeObject(product).ToString(), Encoding.UTF8, "application/json");
+            return await ExecuteRequestAsync<TictailProduct>(req, method, json);
         }
 
         /// <summary>

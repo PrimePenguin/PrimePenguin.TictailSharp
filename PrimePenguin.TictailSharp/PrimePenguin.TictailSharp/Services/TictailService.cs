@@ -177,8 +177,8 @@ namespace PrimePenguin.TictailSharp.Services
             {
                 var policyResult = await _executionPolicy.Run(baseRequestMessage, async requestMessage =>
                 {
-                    Client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type",
-                        "application/json; charset=utf-8");
+                    //Client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type",
+                    //    "application/json; charset=utf-8");
                     var request = Client.SendAsync(requestMessage);
 
                     using (var response = await request)
@@ -192,6 +192,11 @@ namespace PrimePenguin.TictailSharp.Services
                         // Delete methods should not be parsing the response JSON and should instead
                         // be using the non-generic ExecuteRequestAsync.
                         var reader = new JsonTextReader(new StringReader(rawResult));
+                        if (HttpMethod.Head.Equals(method))
+                        {
+                            var data = Convert.ToInt32(response.Headers.GetValues("X-Count").First());
+                            return new RequestResult<T>(response, Parse<T>(Convert.ToInt32(data)), rawResult);
+                        }
                         if (rawResult.StartsWith("["))
                         {
                             var data = Serializer.Deserialize<JArray>(reader);
@@ -213,6 +218,16 @@ namespace PrimePenguin.TictailSharp.Services
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        private static T Parse<T>(int parameter)
+        {
+          return(T) (object) parameter;
+        }
+        /// <summary>
         ///     Checks a response for exceptions or invalid status codes. Throws an exception when necessary.
         /// </summary>
         /// <param name="response">The response.</param>
@@ -228,23 +243,6 @@ namespace PrimePenguin.TictailSharp.Services
                 response.Headers.FirstOrDefault(h => h.Key.Equals("X-Request-Id", StringComparison.OrdinalIgnoreCase));
             var requestId = requestIdHeader.Value?.FirstOrDefault();
             var code = response.StatusCode;
-
-            // If the error was caused by reaching the API rate limit, throw a rate limit exception.
-            if ((int) code == 429 /* Too many requests */)
-            {
-                var listMessage =
-                    "Exceeded 2 calls per second for api client. Reduce request rates to resume uninterrupted service.";
-                var rateLimitMessage = $"Error: {listMessage}";
-
-                // Ticatil used to return JSON for rate limit exceptions, but then made an unannounced change and started returing HTML. 
-                // This dictionary is an attempt at preserving what was previously returned.
-                var rateLimitErrors = new Dictionary<string, IEnumerable<string>>
-                {
-                    {"Error", new List<string> {listMessage}}
-                };
-
-                throw new TictailRateLimitException(code, rateLimitErrors, rateLimitMessage, rawResponse, requestId);
-            }
 
             var errors = ParseErrorJson(rawResponse);
             var message = $"Response did not indicate success. Status: {(int) code} {response.ReasonPhrase}.";

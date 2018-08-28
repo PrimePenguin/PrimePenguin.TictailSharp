@@ -41,6 +41,12 @@ namespace PrimePenguin.TictailSharp.Entities
         [JsonProperty("tracking_status")]
         public string TrackingStatus { get; set; }
 
+        [JsonProperty("message_source")]
+        public string MessageSource { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
         /// <summary>
         ///     The UTC date and time in ISO 8601 format format when this product was created.
         /// </summary>
