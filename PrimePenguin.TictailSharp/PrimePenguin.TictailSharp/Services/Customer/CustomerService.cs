@@ -50,5 +50,11 @@ namespace PrimePenguin.TictailSharp.Services.Customer
 
             return await ExecuteRequestAsync<Entities.TictailCustomer>(req, HttpMethod.Get);
         }
+
+        public virtual async Task<int> CountAsync(string storeId)
+        {
+            var req = PrepareRequest($"stores/{storeId}/customers");
+            return await ExecuteRequestAsync<int>(req, HttpMethod.Head);
+        }
     }
 }

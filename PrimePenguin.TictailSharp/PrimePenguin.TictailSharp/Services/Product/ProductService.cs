@@ -95,5 +95,11 @@ namespace PrimePenguin.TictailSharp.Services.Product
 
             await ExecuteRequestAsync(req, HttpMethod.Delete);
         }
+
+        public virtual async Task<int> CountAsync(string storeId)
+        {
+            var req = PrepareRequest($"stores/{storeId}/products");
+            return await ExecuteRequestAsync<int>(req, HttpMethod.Head);
+        }
     }
 }

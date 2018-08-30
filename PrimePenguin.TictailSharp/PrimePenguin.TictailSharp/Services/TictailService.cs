@@ -194,8 +194,16 @@ namespace PrimePenguin.TictailSharp.Services
                         var reader = new JsonTextReader(new StringReader(rawResult));
                         if (HttpMethod.Head.Equals(method))
                         {
-                            var data = Convert.ToInt32(response.Headers.GetValues("X-Count").First());
-                            return new RequestResult<T>(response, Parse<T>(Convert.ToInt32(data)), rawResult);
+                            if (response.Headers.Contains("X-Count"))
+                            {
+                                var data = Convert.ToInt32(response.Headers.GetValues("X-Count").First());
+                                return new RequestResult<T>(response, Parse<T>(Convert.ToInt32(data)), rawResult);
+                            }
+                            else
+                            {
+                                var data = Convert.ToInt32(response.Headers.GetValues("X-Total-Count").First());
+                                return new RequestResult<T>(response, Parse<T>(Convert.ToInt32(data)), rawResult);
+                            }
                         }
                         if (rawResult.StartsWith("["))
                         {
