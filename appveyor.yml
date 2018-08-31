@@ -1,0 +1,7 @@
+version: 1.0.{build}
+build:
+  verbosity: minimal
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: J3raTuLsdxtl9/TgcucsyNyOAy6CXWvqT7hNq2I4KQ96zlGtpIQ8LGFLdvCXmudD
