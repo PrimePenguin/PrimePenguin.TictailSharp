@@ -4,4 +4,4 @@ build:
 deploy:
 - provider: GitHub
   auth_token:
-    secure: J3raTuLsdxtl9/TgcucsyNyOAy6CXWvqT7hNq2I4KQ96zlGtpIQ8LGFLdvCXmudD
+    secure: ba91tZnwPFaEUkA7MC5GHZQlJ8WAXs9fgwBNHzfRfyondI9kQY7QV/mLkD3CzpGIni5ICDHuwNM9YcXBqhB9hDivIvyGLvk/Sfhb/JPb2+8=
